@@ -6360,7 +6360,7 @@
     "withdraw_code": "<input type=\"hidden\" id=\"withdrawal_code\" name=\"withdrawal_code\"/>\n<script>\nwithdrawal_code = '';\nvar characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\nvar charactersLength = characters.length;\nfor ( var i = 0; i < 16; i++ ) {\n  withdrawal_code += characters.charAt(Math.floor(Math.random() * charactersLength));\n}\nTrial.set(\"withdrawal_code\",withdrawal_code);\n$(\"#withdrawal_code\").val(withdrawal_code);\nTrial.set_timer(function(){\n  Trial.submit();\n},100);\n</script>",
     "withdrawal_code_show": "<div>\n  <h1>Important information before you finish</h1>\n  \n  Thank you for participating! If you would like to withdraw, please e-mail the following code to the researcher:\n  \n  <h1 class=\"text-primary\" id=\"withdrawal_code\"></h1>\n  <button class=\"btn btn-primary\" onclick=\"Trial.submit()\">Proceed</button>\n  \n</div>\n\n<script>\n\nTrial.set_timer(function(){\n  $(\"#withdrawal_code\").html(Trial.get(\"withdrawal_code\"));\n},100);\n</script>"
   },
-  "location": "dubey-haffey-2/autumn-2020-project",
+  "location": "dubey-haffey-2/autumn-2020",
   "conditions": [
     {
       "name": "condition_1",
