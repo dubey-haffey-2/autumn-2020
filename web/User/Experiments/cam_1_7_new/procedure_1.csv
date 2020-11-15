@@ -4,7 +4,7 @@ Item,Trial Type,Max Time,Text,Shuffle 1,survey,left_back,right_back,lock_img,blo
 0,survey,,,off,cam_demographics,,,,,,,,,,
 0,instruct,,"<span style=""font-size:20px""><b>You will see the two boxes with locks</span></b><br>
 <span style=""font-size:20px""><b>These boxes are linked with the same set of videos </span></b><br>
-<span style=""font-size:20px""><b> However, one box opens at the same delay (3 seconds) while other opens at a variable delay (1,3,6 seconds). </span></b><br><br>
+<span style=""font-size:20px""><b> However, one box opens at the same delay (3 seconds) while the other opens at a variable delay (0,3,6 seconds). </span></b><br><br>
 <span style=""font-size:20px""><b>Open the locks to see a video</span></b><br>
 <span style=""font-size:20px""><b>You can choose freely which locks to open</span></b><br><br>
 <span style=""font-size:20px""><b>Click on the lock you want to unlock</span></b><br><br>

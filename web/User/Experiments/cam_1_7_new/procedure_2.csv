@@ -10,8 +10,8 @@ Item,Trial Type,Max Time,Text,Shuffle 1,survey,left_back,right_back,lock_img,blo
 <span style=""font-size:20px""><b>Click on the lock you want to unlock</span></b><br><br>
 <span style=""font-size:20px""><b>Wait until a lock has disappeared before you click on another lock</span></b><br><br>
 <span style=""font-size:20px""><b>You cannot change your mind about which box you want to open once you've clicked on a lock</span></b><br>",off,,,,,,,,,,,
-2 to 31,cam_uncertainty,,,trial,,https://dl.dropbox.com/s/vbv4uenpk3cppm1/green.jpg?dl=1,https://dl.dropbox.com/s/p2bjuk5kxxmzxe1/pink.jpg?dl=1,https://dl.dropbox.com/s/3i2armyx6gnb5xj/lock1%20%28edited-Pixlr%29.jpg?dl=0,https://dl.dropbox.com/s/pl2g9qf13okyu2m/lock1_crossed_out.jpg?dl=0,1000,green,pink,certain,uncertain,
-32 to 61,cam_uncertainty,,,trial,,https://dl.dropbox.com/s/p2bjuk5kxxmzxe1/pink.jpg?dl=1,https://dl.dropbox.com/s/vbv4uenpk3cppm1/green.jpg?dl=1,https://dl.dropbox.com/s/3i2armyx6gnb5xj/lock1%20%28edited-Pixlr%29.jpg?dl=0,https://dl.dropbox.com/s/pl2g9qf13okyu2m/lock1_crossed_out.jpg?dl=0,1000,pink,green,uncertain,certain,
+2 to 31,cam_uncertainty,,,trial,,../User/Stimuli/cam/green.jpg,../User/Stimuli/cam/pink.jpg,../User/Stimuli/cam/lock1.jpg,../User/Stimuli/cam/lock1_crossed_out.jpg,1000,green,pink,certain,uncertain,
+32 to 61,cam_uncertainty,,,trial,,../User/Stimuli/cam/pink.jpg,../User/Stimuli/cam/green.jpg,../User/Stimuli/cam/lock1.jpg,../User/Stimuli/cam/lock1_crossed_out.jpg,1000,pink,green,uncertain,certain,
 0,survey,,,off,scarred_survey,,,,,,,,,,
 0,survey,,,off,intolerance to uncertainty.csv,,,,,,,,,,
 0,instruct,,"<span style=""font-size:40px""><b>Click on ""Proceed"" to save your data. </span></b><br><br> 
