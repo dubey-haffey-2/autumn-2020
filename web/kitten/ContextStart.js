@@ -45,16 +45,29 @@ switch(Collector.detect_context()){
       //alert("hi");
       if(typeof(Collector.electron) !== "undefined"){
         clearInterval(wait_for_electron);
-        master_json = Collector.electron.read_file("","master.json");
+        master_json = Collector.electron.fs.read_file("","master.json");
         if(master_json !== ""){
           master_json = JSON.parse(master_json);
         } else {
           master_json = default_master_json;
+          var write_response = Collector.electron.fs.write_file(
+            "",
+            "master.json",
+            JSON.stringify(master_json, null, 2));
+          if(write_response !== "success"){
+            bootbox.alert(response);
+          }
         }
         var git_exists = Collector.electron.git.exists();
         if(git_exists !== "success"){
           bootbox.alert(git_exists);
-        } 
+        } else {
+          github_json = JSON.parse(
+            Collector.electron.git.load_master()
+          );
+          console.dir("github_json");
+          console.dir(github_json);
+        }
         Collector.start();
       }
     },100);

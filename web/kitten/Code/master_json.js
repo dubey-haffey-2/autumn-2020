@@ -14,9 +14,9 @@ default_master_json = {
     "versions" :		 		[]
   },
   "github": {
-    "organisation"  : "",
+    "organization"  : "",
     "repository"    : "",
-    "organisations" : {}
+    "organizations" : {}
   },
   "mods":    {},
   "surveys" : {},
