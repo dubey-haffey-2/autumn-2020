@@ -29,6 +29,7 @@ Collector.start = function(){
   wait_till_exists("list_data_servers");
   wait_till_exists("list_servers");
   wait_till_exists("list_surveys");
+  wait_till_exists("list_pathways");
 }
 
 switch(Collector.detect_context()){
@@ -65,8 +66,6 @@ switch(Collector.detect_context()){
           github_json = JSON.parse(
             Collector.electron.git.load_master()
           );
-          console.dir("github_json");
-          console.dir(github_json);
         }
         Collector.start();
       }
