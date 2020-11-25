@@ -1351,7 +1351,7 @@
         ""
       ],
       [
-        "cam_consent_5",
+        "cam_consent_6",
         "6. I understand my name and any personal details will be anonymised in any report concerning this study, though I agree that any of the anonymised data I provide may be used in the researcher’s report and possibly used for publication in academic journals",
         "likert",
         "Agree",
@@ -1362,7 +1362,7 @@
         ""
       ],
       [
-        "cam_consent_5",
+        "cam_consent_7",
         "7. I understand that in case the anonymous data is used for publication, the anonymous data will be available to the relevant researchers, and could be uploaded to an online research repository.",
         "likert",
         "Agree",
@@ -1373,7 +1373,7 @@
         null
       ],
       [
-        "cam_consent_5",
+        "cam_consent_8",
         "8. I am willing for my anonymised data to be used for teaching purposes at De Montfort University.  (Please note that is possible to participate in the research even if you do not agree to this).",
         "likert",
         "Agree",
