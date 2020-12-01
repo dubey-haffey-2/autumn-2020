@@ -142,10 +142,10 @@
 
 <script>
 locks_obj = {
-  left_locks:   "{{left_locks}}",
-  right_locks:  "{{right_locks}}",
-  left_type:  "{{left_type}}",
-  right_type: "{{right_type}}",
+  left_locks:    "{{left_locks}}",
+  right_locks:   "{{right_locks}}",
+  left_type:     "{{left_type}}",
+  right_type:    "{{right_type}}",
   locks_clicked: 0
 }
 $("#left_lock_1").show();                                                       // always show at least 1 left lock
@@ -168,91 +168,102 @@ if(locks_obj.right_locks == 3){                                                 
 /*
 * make the locks responsive when the user presses a keyboard response
 */
-function bind_lock(){
-  keys_active = true;
-  if(keys_active == true){
-    $(window).bind('keydown', function(event) {
-  		switch (String.fromCharCode(event.which).toLowerCase()) {
-  			case 'z':
-  		     event.preventDefault();
-  				//check if the user has already clicked on a right lock?
-  				if($(".right_lock:visible").length == locks_obj.right_locks){
-  				  
-				    for(var i = 1; i <= locks_obj["right_locks"]; i++){                                
-              $("#block_right_lock_" + i).show();
-            }    
-  				  
-  				  keys_active = false;
-  				  $("#left_lock_" + (locks_obj.locks_clicked + 1)).fadeOut(1000, function(){
-  				    locks_obj.locks_clicked++;
-  				    keys_active = true;
-  				    
-  				    if($(".left_lock:visible").length == 0){                          // if there are now no visible locks, it's time to show the video:
-  				      $("#left_right_chosen").val("left");                            // storing which side the user chose
-                $("#type_chosen").val(locks_obj["left_type"]);                  // storing what type of stimuli the user chose (e.g. social vs. nonsocial)
-                $(".block_lock").hide();                                        // hide all the block locks
-                $("#left_img").css("z-index",3);                                // give the background pattern for the chosen side priority
-                
-  				      $("#left_img").animate({                                        // enlarge the backgrounf pattern to cover the whole of the div
-                  left :  "0px",
-                  top  :  "0px",
-                  width:  "100%",
-                  height: "100%"
-                },function(){                                                   // once the animation of the background pattern is complete:
-    				      $("#left_video").show();                                      // show the chosen video
-                  $("#left_video")[0].play();                                   // play the chosen video
-                  $("#left_video").on('ended',function(){                       // when the video finishes:
-                    $("#vid_rt").val(Trial.elapsed());                          // store the time it took to get to this point
-                    Trial.submit();                                             // move on to the next trial
-                  });
-                });
-  				    }
-  				  });
-  				}
-  			break;
-  			case 'm':
+
+
+
+
+
+keys_active = true;
+$(window).bind('keydown', function(event) {
+	switch (String.fromCharCode(event.which).toLowerCase()) {
+		case 'z':
+		  
+		  if(keys_active == true & $("#block_left_lock_1:visible").length !== 1){
+        keys_active = false;
+		  
+	      event.preventDefault();
+			  //check if the user has already clicked on a right lock?
+			  if($(".right_lock:visible").length == locks_obj.right_locks){
+			  
+  		    for(var i = 1; i <= locks_obj["right_locks"]; i++){                                
+            $("#block_right_lock_" + i).show();
+          }    
   			  
-  			  event.preventDefault();
-  				//check if the user has already clicked on a right lock?
-  				if($(".left_lock:visible").length == locks_obj.left_locks){
-  				  
-				    for(var i = 1; i <= locks_obj["left_locks"]; i++){                                
-              $("#block_left_lock_" + i).show();
-            }    
-  				  
-  				  keys_active = false;
-  				  $("#right_lock_" + (locks_obj.locks_clicked + 1)).fadeOut(1000, function(){
-  				    locks_obj.locks_clicked++;
-  				    keys_active = true;
-  				    
-  				    if($(".right_lock:visible").length == 0){                          // if there are now no visible locks, it's time to show the video:
-  				      $("#left_right_chosen").val("right");                            // storing which side the user chose
-                $("#type_chosen").val(locks_obj["right_type"]);                  // storing what type of stimuli the user chose (e.g. social vs. nonsocial)
-                $(".block_lock").hide();                                        // hide all the block locks
-                $("#right_img").css("z-index",3);                                // give the background pattern for the chosen side priority
-                
-  				      $("#right_img").animate({                                        // enlarge the backgrounf pattern to cover the whole of the div
-                  left :  "0px",
-                  top  :  "0px",
-                  width:  "100%",
-                  height: "100%"
-                },function(){                                                   // once the animation of the background pattern is complete:
-    				      $("#right_video").show();                                      // show the chosen video
-                  $("#right_video")[0].play();                                   // play the chosen video
-                  $("#right_video").on('ended',function(){                       // when the video finishes:
-                    $("#vid_rt").val(Trial.elapsed());                          // store the time it took to get to this point
-                    Trial.submit();                                             // move on to the next trial
-                  });
+			  
+			  
+  			  locks_obj.locks_clicked++;
+  			  $("#lock_" + locks_obj.locks_clicked + "_rt").val(Trial.elapsed());
+  			  
+  			  $("#left_lock_" + (locks_obj.locks_clicked)).fadeOut(1000, function(){
+  			    if($(".left_lock:visible").length == 0){                          // if there are now no visible locks, it's time to show the video:
+  			      $("#left_right_chosen").val("left");                            // storing which side the user chose
+              $("#type_chosen").val(locks_obj["left_type"]);                  // storing what type of stimuli the user chose (e.g. social vs. nonsocial)
+              $(".block_lock").hide();                                        // hide all the block locks
+              $("#left_img").css("z-index",3);                                // give the background pattern for the chosen side priority
+              
+  			      $("#left_img").animate({                                        // enlarge the backgrounf pattern to cover the whole of the div
+                left :  "0px",
+                top  :  "0px",
+                width:  "100%",
+                height: "100%"
+              },function(){                                                   // once the animation of the background pattern is complete:
+  				      $("#left_video").show();                                      // show the chosen video
+                $("#left_video")[0].play();                                   // play the chosen video
+                $("#left_video").on('ended',function(){                       // when the video finishes:
+                  $("#vid_rt").val(Trial.elapsed());                          // store the time it took to get to this point
+                  Trial.submit();                                             // move on to the next trial
                 });
-  				    }
-  				  });
-  				}
-			  break;
-  		}
-  	
-    });
-  			
-  }
-}
-bind_lock()
+              });
+  			    } else {
+    			    keys_active = true;
+    			  }
+			    });
+			  } 
+			}
+		break;
+		case 'm':
+		  if(keys_active == true & $("#block_right_lock_1:visible").length !== 1){
+        keys_active = false;
+  		  
+  		  event.preventDefault();
+  			//check if the user has already clicked on a right lock?
+  			if($(".left_lock:visible").length == locks_obj.left_locks){
+  		    for(var i = 1; i <= locks_obj["left_locks"]; i++){                                
+            $("#block_left_lock_" + i).show();
+          }    
+  			  
+  			  locks_obj.locks_clicked++;
+  			  $("#lock_" + locks_obj.locks_clicked + "_rt").val(Trial.elapsed());
+  			  
+  			  
+  			  $("#right_lock_" + (locks_obj.locks_clicked)).fadeOut(1000, function(){
+  			    if($(".right_lock:visible").length == 0){                          // if there are now no visible locks, it's time to show the video:
+  			      $("#left_right_chosen").val("right");                            // storing which side the user chose
+              $("#type_chosen").val(locks_obj["right_type"]);                  // storing what type of stimuli the user chose (e.g. social vs. nonsocial)
+              $(".block_lock").hide();                                        // hide all the block locks
+              $("#right_img").css("z-index",3);                                // give the background pattern for the chosen side priority
+              
+  			      $("#right_img").animate({                                        // enlarge the backgrounf pattern to cover the whole of the div
+                left :  "0px",
+                top  :  "0px",
+                width:  "100%",
+                height: "100%"
+              },function(){                                                   // once the animation of the background pattern is complete:
+  				      $("#right_video").show();                                      // show the chosen video
+                $("#right_video")[0].play();                                   // play the chosen video
+                $("#right_video").on('ended',function(){                       // when the video finishes:
+                  $("#vid_rt").val(Trial.elapsed());                          // store the time it took to get to this point
+                  Trial.submit();                                             // move on to the next trial
+                });
+              });
+  			    } else {
+    			    keys_active = true;
+    			  }
+  			  });
+  			}
+		  }
+	  break;
+	}
+});
+
 </script>
