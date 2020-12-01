@@ -10,9 +10,10 @@ Item,Trial Type,Max Time,Text,Shuffle 1,survey,left_back,right_back,lock_img,loc
 <span style=""font-size:20px""><b>One box has videos of people while other has videos of household objects</span></b><br><br>
 <span style=""font-size:20px""><b>Open the locks to see a video</span></b><br>
 <span style=""font-size:20px""><b>You can choose freely which locks to open</span></b><br><br>
-<span style=""font-size:20px""><b>Click on the lock you want to unlock</span></b><br><br>
-<span style=""font-size:20px""><b>Wait until a lock has disappeared before you click on another lock</span></b><br><br>
-<span style=""font-size:20px""><b>You cannot change your mind about which video you want to choose once you've clicked on a lock</span></b><br>",off,,,,,,,,,,,
+<span style=""font-size:20px""><b>Press the <u class=>Z</u> key once for each lock on the <u class=""text-primary"">left box</u> to unlock it</span></b><br><br>
+<span style=""font-size:20px""><b>Press the <u>M</u> key once for each lock on the <u>right box</u> to unlock it</span></b><br><br>
+<span style=""font-size:20px""><b>Wait until a lock has disappeared before you try to open another lock</span></b><br><br>
+<span style=""font-size:20px""><b>You cannot change your mind about which video you want to choose once you've opened a lock</span></b><br>",off,,,,,,,,,,,
 2 to 31,cam_3,,,trial,,../User/Stimuli/cam/red.jpg,../User/Stimuli/cam/blue.jpg,../User/Stimuli/cam/lock1.jpg,1000,../User/Stimuli/cam/lock1_crossed_out.jpg,red,blue,social,nonsocial,
 32 to 61,cam_3,,,trial,,../User/Stimuli/cam/blue.jpg,../User/Stimuli/cam/red.jpg,../User/Stimuli/cam/lock1.jpg,1000,../User/Stimuli/cam/lock1_crossed_out.jpg,blue,red,nonsocial,social,
 0,survey,,,off,autism_quotient,,,,,,,,,,
