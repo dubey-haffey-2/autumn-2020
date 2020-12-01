@@ -99,7 +99,7 @@
   <img id='left_img' src="{{left_back}}" class="stim_style" />
   <video id="left_video" class="stim_style video_stim" muted>
     <source src="{{left_video}}" type="video/mp4">
-  Your browser does not support the video tag.
+    Your browser does not support the video tag.
   </video>
   <img id='right_img' src="{{right_back}}" class="stim_style" />
   <video id="right_video"  class="stim_style video_stim" muted>
@@ -151,49 +151,94 @@ if(locks_obj.right_locks == 3){                                                 
   $("#right_lock_3").show();
 }
 
-function lock_click(this_id){
-  $(".lock_img").unbind();                                                      // nothing should now happen if you click on the locks
-  var left_right_lock = this_id.split("_")[0];                                  // identifying whether this is the left or right lock that has just been clicked
-  var opposite_lock = left_right_lock == "left" ? "right" : "left";             // identifying what the opposite side to the clicked lock is
-  $("." + opposite_lock + "_lock").hide();                                      // hide the opposite lock(s)
-  
-  
-  var locks_loop = parseFloat(locks_obj[opposite_lock + "_locks"]) + 1;         // count how many opposite locks there are
-  for(var i = 1; i < locks_loop; i++){                                          //////////////////////////////
-    $("#block_" + opposite_lock + "_lock_" + i).show();                         // block the opposite locks //
-  }                                                                             //////////////////////////////
-  
-  locks_obj.locks_clicked++;                                                    // identify which lock has just been clicked          
-  $("#lock_" + locks_obj.locks_clicked + "_rt").val(Trial.elapsed());           // store the time since the trial started as a response time in relation to this lock number (1 or 2 or 3)
-  $("#" + this_id).fadeOut({{lock_time}}, function(){                           // hide the current lock; lock_time is how long the user needs to wait before doing the following:
-    bind_lock();                                                                // allow users to click the locks again
-    if($("." + left_right_lock + "_lock:visible").length == 0){                 // if there are now no visible locks, it's time to show the video:
-      $("#left_right_chosen").val(left_right_lock);                             // storing which side the user chose
-      $("#type_chosen").val(locks_obj[left_right_lock + "_type"]);              // storing what type of stimuli the user chose (e.g. social vs. nonsocial)
-      $(".block_lock").hide();                                                  // hide all the block locks
-      $("#" + left_right_lock + "_img").css("z-index",3);                       // give the background pattern for the chosen side priority
-      $("#" + left_right_lock + "_img").animate({                               // enlarge the backgrounf pattern to cover the whole of the div
-        left :  "0px",
-        top  :  "0px",
-        width:  "100%",
-        height: "100%"
-      },function(){                                                             // once the animation of the background pattern is complete:
-        $("#" + left_right_lock + "_video").show();                             // show the chosen video
-        $("#" + left_right_lock + "_video")[0].play();                          // play the chosen video
-        $("#" + left_right_lock  +"_video").on('ended',function(){              // when the video finishes:
-          $("#vid_rt").val(Trial.elapsed());                                    // store the time it took to get to this point
-          Trial.submit();                                                       // move on to the next trial
-        });    
-      });
-    }
-  });
-}
-
-function bind_lock(){                                                           ////////////////////////////////////////////////////////
-  $(".lock_img").on("click",function(){                                         // make the locks responsive when they are clicked on //
-    this_id = $(this)[0].id;                                                    ////////////////////////////////////////////////////////
-    lock_click(this_id);
-  });
+/*
+* make the locks responsive when the user presses a keyboard response
+*/
+function bind_lock(){
+  keys_active = true;
+  if(keys_active == true){
+    $(window).bind('keydown', function(event) {
+  		switch (String.fromCharCode(event.which).toLowerCase()) {
+  			case 'z':
+  		     event.preventDefault();
+  				//check if the user has already clicked on a right lock?
+  				if($(".right_lock:visible").length == locks_obj.right_locks){
+  				  
+				    for(var i = 1; i <= locks_obj["right_locks"]; i++){                                
+              $("#block_right_lock_" + i).show();
+            }    
+  				  
+  				  keys_active = false;
+  				  $("#left_lock_" + (locks_obj.locks_clicked + 1)).fadeOut(1000, function(){
+  				    locks_obj.locks_clicked++;
+  				    keys_active = true;
+  				    
+  				    if($(".left_lock:visible").length == 0){                          // if there are now no visible locks, it's time to show the video:
+  				      $("#left_right_chosen").val("left");                            // storing which side the user chose
+                $("#type_chosen").val(locks_obj["left_type"]);                  // storing what type of stimuli the user chose (e.g. social vs. nonsocial)
+                $(".block_lock").hide();                                        // hide all the block locks
+                $("#left_img").css("z-index",3);                                // give the background pattern for the chosen side priority
+                
+  				      $("#left_img").animate({                                        // enlarge the backgrounf pattern to cover the whole of the div
+                  left :  "0px",
+                  top  :  "0px",
+                  width:  "100%",
+                  height: "100%"
+                },function(){                                                   // once the animation of the background pattern is complete:
+    				      $("#left_video").show();                                      // show the chosen video
+                  $("#left_video")[0].play();                                   // play the chosen video
+                  $("#left_video").on('ended',function(){                       // when the video finishes:
+                    $("#vid_rt").val(Trial.elapsed());                          // store the time it took to get to this point
+                    Trial.submit();                                             // move on to the next trial
+                  });
+                });
+  				    }
+  				  });
+  				}
+  			break;
+  			case 'm':
+  			  
+  			  event.preventDefault();
+  				//check if the user has already clicked on a right lock?
+  				if($(".left_lock:visible").length == locks_obj.left_locks){
+  				  
+				    for(var i = 1; i <= locks_obj["left_locks"]; i++){                                
+              $("#block_left_lock_" + i).show();
+            }    
+  				  
+  				  keys_active = false;
+  				  $("#right_lock_" + (locks_obj.locks_clicked + 1)).fadeOut(1000, function(){
+  				    locks_obj.locks_clicked++;
+  				    keys_active = true;
+  				    
+  				    if($(".right_lock:visible").length == 0){                          // if there are now no visible locks, it's time to show the video:
+  				      $("#left_right_chosen").val("right");                            // storing which side the user chose
+                $("#type_chosen").val(locks_obj["right_type"]);                  // storing what type of stimuli the user chose (e.g. social vs. nonsocial)
+                $(".block_lock").hide();                                        // hide all the block locks
+                $("#right_img").css("z-index",3);                                // give the background pattern for the chosen side priority
+                
+  				      $("#right_img").animate({                                        // enlarge the backgrounf pattern to cover the whole of the div
+                  left :  "0px",
+                  top  :  "0px",
+                  width:  "100%",
+                  height: "100%"
+                },function(){                                                   // once the animation of the background pattern is complete:
+    				      $("#right_video").show();                                      // show the chosen video
+                  $("#right_video")[0].play();                                   // play the chosen video
+                  $("#right_video").on('ended',function(){                       // when the video finishes:
+                    $("#vid_rt").val(Trial.elapsed());                          // store the time it took to get to this point
+                    Trial.submit();                                             // move on to the next trial
+                  });
+                });
+  				    }
+  				  });
+  				}
+			  break;
+  		}
+  	
+    });
+  			
+  }
 }
 bind_lock()
 </script>
