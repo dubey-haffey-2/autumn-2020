@@ -53,19 +53,19 @@ write a protocol for Indu and her undergrad
   top:0px;
 }
 #block_left_lock_1{
-  left:125px;
+  left:0px;
 }
 #block_left_lock_2{
-  left:0px;
+  left:125px;
 }
 #block_left_lock_3{
   left:250px;
 }
 #block_right_lock_1{
-  left:525px;
+  left:400px;
 }
 #block_right_lock_2{
-  left:400px;
+  left:525px;
 }
 #block_right_lock_3{
   left:650px;
@@ -80,19 +80,19 @@ write a protocol for Indu and her undergrad
   display:none;
 }
 #left_lock_1{
-  left:125px;
+  left:0px;
 }
 #left_lock_2{
-  left:0px;
+  left:125px;
 }
 #left_lock_3{
   left:250px;
 }
 #right_lock_1{
-  left:525px;
+  left:400px;
 }
 #right_lock_2{
-  left:400px;
+  left:525px;
 }
 #right_lock_3{
   left:650px;
@@ -182,7 +182,6 @@ if(locks_obj.left_locks == 3){
   $("#left_lock_3").show();
 }
 
-
 $("#right_lock_1").show();
 if(locks_obj.right_locks > 1){
   $("#right_lock_2").show();
@@ -191,84 +190,131 @@ if(locks_obj.right_locks == 3){
   $("#right_lock_3").show();
 }
 
-function lock_click(this_id){
-  $(".lock_img").unbind();
-  setTimeout(function(){
-    bind_lock();
-  },{{lock_time}});
-  
-  
-  var left_right_lock = this_id.split("_")[0];
-  
-  var opposite_lock = left_right_lock == "left" ? "right" : "left";
-  
-  $("." + opposite_lock + "_lock").hide();
-  
-  //block_left_lock_1
-  var locks_loop = parseFloat(locks_obj[opposite_lock + "_locks"]) + 1;
-  for(var i = 1; i < locks_loop; i++){
-    
-    $("#block_" + opposite_lock + "_lock_" + i).show();
-    
-  }
-  
-  
-  
-  
-  
-  
-  locks_obj.locks_clicked++;                                                    // identify which lock has just been clicked          
-  $("#lock_" + locks_obj.locks_clicked + "_rt").val(Trial.elapsed());           // store the time since the trial started as a response time in relation to this lock number (1 or 2 or 3)
-  $("#" + this_id).fadeOut({{lock_time}}, function(){                           // hide the current lock; lock_time is how long the user needs to wait before doing the following:
-    if($("." + left_right_lock + "_lock:visible").length == 0){                 // if there are now no visible locks, it's time to show the video:
-      $(".lock_img").unbind();
-    
-      $("#left_right_chosen").val(left_right_lock);
-      $("#social_chosen").val(locks_obj[left_right_lock + "_social"]);
-      $(".block_lock").hide();
-      setTimeout(function(){
-        $("#" + left_right_lock + "_img").css("z-index",3);
-        $("#" + left_right_lock + "_img").animate({
-          left :  "0px",
-          top  :  "0px",
-          width:  "100%",
-          height: "100%"
-        },function(){
-          
-          
-          if(left_right_lock == "left"){
-            var countdown = "{{left_timer}}";
-          } else {
-            var countdown = "{{right_timer}}";
-          }
-          // add countdown here
-          $("#countdown_div").show();
-          $("#countdown_div").html(countdown);
-          var countdown_interval = setInterval(function(){
-            countdown--;
-            $("#countdown_div").html(countdown);
-            if(countdown < 0){
-              $("#countdown_div").hide();
-              clearInterval(countdown_interval);
-              $("#" + left_right_lock + "_video").show();
-              $("#" + left_right_lock + "_video")[0].play();
-              $("#" + left_right_lock  +"_video").on('ended',function(){
-                $("#vid_rt").val(Trial.elapsed());
-                Trial.submit();
-              });    
-            }
-          },1000);
-        });
-      },0);    //"{{lock_time}}" 
-    }
-  });
-}
+/*
+* make the locks responsive when the user presses a keyboard response
+*/
+keys_active = true;
 
-function bind_lock(){
-  $(".lock_img").on("click",function(){
-    this_id = $(this)[0].id;
-    lock_click(this_id);
-  });
-}
-bind_lock()
+
+
+$(window).bind('keydown', function(event) {
+	switch (String.fromCharCode(event.which).toLowerCase()) {
+		case 'z':
+		  
+		  if(keys_active == true & $("#block_left_lock_1:visible").length !== 1){
+		    keys_active = false;
+  	    event.preventDefault();
+  			//check if the user has already clicked on a right lock?
+  			if($(".right_lock:visible").length == locks_obj.right_locks){
+  			  
+  		    for(var i = 1; i <= locks_obj["right_locks"]; i++){
+  		      console.log("i");
+  		      console.log(i);
+            $("#block_right_lock_" + i).show();
+          }
+          
+  			  
+  			  locks_obj.locks_clicked++;
+  			  $("#lock_" + locks_obj.locks_clicked + "_rt").val(Trial.elapsed());
+  			  $("#left_lock_" + (locks_obj.locks_clicked)).fadeOut(1000, function(){
+  			    if($(".left_lock:visible").length == 0){                            // if there are now no visible locks, it's time to show the video:
+  			      $("#left_right_chosen").val("left");                              // storing which side the user chose
+              $("#type_chosen").val(locks_obj["left_type"]);                    // storing what type of stimuli the user chose (e.g. social vs. nonsocial)
+              $(".block_lock").hide();                                          // hide all the block locks
+              $("#left_img").css("z-index",3);                                  // give the background pattern for the chosen side priority
+              
+  			      $("#left_img").animate({                                          // enlarge the backgrounf pattern to cover the whole of the div
+                left :  "0px",
+                top  :  "0px",
+                width:  "100%",
+                height: "100%"
+              },function(){                                                     // once the animation of the background pattern is complete:
+  				      
+  				      var countdown = "{{left_timer}}";
+                // add countdown here
+                $("#countdown_div").show();
+                $("#countdown_div").html(countdown);
+                var countdown_interval = setInterval(function(){
+                  countdown--;
+                  $("#countdown_div").html(countdown);
+                  if(countdown < 0){
+                    $("#countdown_div").hide();
+                    clearInterval(countdown_interval);
+                    
+                    $("#left_video").show();                                      // show the chosen video
+                    $("#left_video")[0].play();                                   // play the chosen video
+                    $("#left_video").on('ended',function(){                       // when the video finishes:
+                      $("#vid_rt").val(Trial.elapsed());                          // store the time it took to get to this point
+                      Trial.submit();                                             // move on to the next trial
+                    });
+                  }
+                },1000);
+  				      
+              });
+  			    } else {
+  			      keys_active = true;
+  			    }
+  			  });
+  			}  
+		  }
+		  break;
+		case 'm':
+		  if(
+		    keys_active == true & $("#block_right_lock_1:visible").length !== 1
+	    ){
+		     keys_active = false;
+  		  event.preventDefault();
+  			//check if the user has already clicked on a right lock?
+  			if($(".left_lock:visible").length == locks_obj.left_locks){
+  		    for(var i = 1; i <= locks_obj["left_locks"]; i++){                                
+            $("#block_left_lock_" + i).show();
+          }    
+  			  
+			 
+  			  $("#right_lock_" + (locks_obj.locks_clicked + 1)).fadeOut(1000, function(){
+  			    locks_obj.locks_clicked++;
+  			    
+  			    if($(".right_lock:visible").length == 0){                           // if there are now no visible locks, it's time to show the video:
+  			      $("#left_right_chosen").val("right");                             // storing which side the user chose
+              $("#type_chosen").val(locks_obj["right_type"]);                   // storing what type of stimuli the user chose (e.g. social vs. nonsocial)
+              $(".block_lock").hide();                                          // hide all the block locks
+              $("#right_img").css("z-index",3);                                 // give the background pattern for the chosen side priority
+              
+  			      $("#right_img").animate({                                         // enlarge the backgrounf pattern to cover the whole of the div
+                left :  "0px",
+                top  :  "0px",
+                width:  "100%",
+                height: "100%"
+              },function(){                                                     // once the animation of the background pattern is complete:
+  				      var countdown = "{{left_timer}}";
+                // add countdown here
+                $("#countdown_div").show();
+                $("#countdown_div").html(countdown);
+                var countdown_interval = setInterval(function(){
+                  countdown--;
+                  $("#countdown_div").html(countdown);
+                  if(countdown < 0){
+                    $("#countdown_div").hide();
+                    clearInterval(countdown_interval);
+                    
+                    
+      				      $("#right_video").show();                                   // show the chosen video
+                    $("#right_video")[0].play();                                // play the chosen video
+                    $("#right_video").on('ended',function(){                    // when the video finishes:
+                      $("#vid_rt").val(Trial.elapsed());                        // store the time it took to get to this point
+                      Trial.submit();                                           // move on to the next trial
+                    });
+                  } 
+                },1000);
+  				      
+              });
+  			    } else {
+              keys_active = true;
+            }
+  			  });
+			  }
+		  }
+	  break;
+	}
+});
 </script>
