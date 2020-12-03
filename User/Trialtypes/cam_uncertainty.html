@@ -52,6 +52,21 @@ write a protocol for Indu and her undergrad
   left:400px;
   top:0px;
 }
+#left_instruction{
+  position:absolute;
+  left:0px;
+  top:350px;
+  font-size:30px;
+}
+#right_instruction{
+  position:absolute;
+  left:400px;
+  top:350px;
+  font-size:30px;
+}
+
+
+
 #block_left_lock_1{
   left:0px;
 }
@@ -135,11 +150,13 @@ write a protocol for Indu and her undergrad
 <div id="everything_div">
   
   <img id='left_img' src="{{left_back}}" class="stim_style" />
+  <div id="left_instruction">{{left_instruction}}</div>
   <video id="left_video" class="stim_style video_stim" muted>
     <source src="{{left_video}}" type="video/mp4">
   Your browser does not support the video tag.
   </video>
   <img id='right_img' src="{{right_back}}" class="stim_style" />
+  <div id="right_instruction">{{right_instruction}}</div>
   <video id="right_video"  class="stim_style video_stim" muted>
     <source src="{{right_video}}" type="video/mp4">
   Your browser does not support the video tag.
