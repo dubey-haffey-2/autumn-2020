@@ -286,7 +286,7 @@ $(window).bind('keydown', function(event) {
 			 
   			  $("#right_lock_" + (locks_obj.locks_clicked + 1)).fadeOut(1000, function(){
   			    locks_obj.locks_clicked++;
-  			    
+  			    $("#lock_" + locks_obj.locks_clicked + "_rt").val(Trial.elapsed());
   			    if($(".right_lock:visible").length == 0){                           // if there are now no visible locks, it's time to show the video:
   			      $("#left_right_chosen").val("right");                             // storing which side the user chose
               $("#type_chosen").val(locks_obj["right_type"]);                   // storing what type of stimuli the user chose (e.g. social vs. nonsocial)
